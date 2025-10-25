@@ -1,0 +1,17 @@
+<div class="flex flex-col md:flex-row gap-6 border-t-2 h-max" cdkDropListGroup>
+    @for (column of columns; track $index; let cIndex = $index) {
+        <div class="flex-1 bg-amber-100 p-2 rounded-lg shadow h-full">
+            <h2 class="text-xl">{{column.title}}</h2>
+            <div cdkDropList class="min-h-32 space-y-2" (cdkDropListDropped)="drop($event)" [cdkDropListData]="column.tasks">
+                @for (card of column.tasks; track card.name) {
+                    <app-card [task]="card"></app-card>
+                }
+            </div>
+            <button (click)="addTask(cIndex)">Add Task</button>
+        </div>
+    }
+    <div class="w-auto">
+        <button (click)="addColumn()"> add Column</button>
+    </div>
+
+</div>
