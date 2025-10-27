@@ -1,4 +1,3 @@
-const dotenv = require('dotenv')
 
 const pgp = require('pg-promise')(/* options */)
 
@@ -128,7 +127,7 @@ async function getTasks(req, res) {
 }
 
 // sets up the database tables
-setup()
+// setup()
 
 module.exports = {
   getBoard,
