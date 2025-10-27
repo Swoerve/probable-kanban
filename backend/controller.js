@@ -6,7 +6,7 @@ const dbUri = process.env.PGURI
 if(dbUri !== undefined){
   console.log('connection string exists');
 } else {
-  throw
+  throw new Error('Connection string not found')
 }
 
 const db = pgp(dbUri)
