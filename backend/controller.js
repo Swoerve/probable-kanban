@@ -77,7 +77,7 @@ async function setup() {
 }
 
 async function getBoard(req, res) {
-  console.log('incoming board request');
+  //console.log('incoming board request');
   
   await db.one(`SELECT * FROM boards WHERE id = $1`, req.params.id)
     .then((data) => {
@@ -89,7 +89,7 @@ async function getBoard(req, res) {
 }
 
 async function getColumns(req, res) {
-  console.log('incoming columns request');
+  //console.log('incoming columns request');
   
   await db.many(`SELECT * FROM columns WHERE board_id = $1`, req.params.boardid)
     .then((data) => {
@@ -107,7 +107,7 @@ async function getColumns(req, res) {
 }
 
 async function getTasks(req, res) {
-  console.log('incoming tasks request');
+  //console.log('incoming tasks request');
   
   await db.many(`SELECT * FROM tasks WHERE column_id = $1`, req.params.columnid)
     .then((data) => {
