@@ -1,13 +1,14 @@
 const express = require('express')
 const path = require('path')
 const app = express()
-
+const cors = require('cors')
 const routes = require('./router')
 
 // app.get('/api', (_request, response) => {
 //     response.send({hello: 'World'})
 // })
 
+app.use(cors())
 app.use('/api', express.json())
 
 app.use('/api', routes)
