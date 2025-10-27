@@ -1,6 +1,8 @@
-import { Component, signal } from '@angular/core';
+import { Component, effect, inject, signal } from '@angular/core';
 import { CdkDragDrop, CdkDropList, moveItemInArray, CdkDropListGroup, transferArrayItem } from "@angular/cdk/drag-drop";
 import { Card } from '../card/card';
+import { DbService } from '../../services/db-service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-board',
@@ -11,6 +13,10 @@ import { Card } from '../card/card';
 export class Board {
   columns: any[] = []
   createdNumber = 0
+
+  board = signal<any>(null)
+  columns$!: Observable<any>
+  columnTasks$!: any[]
 
   addColumn() {
     console.log('adding column')
@@ -45,5 +51,41 @@ export class Board {
       transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex)
     }
     
+  }
+
+  private dbService = inject(DbService)
+
+  constructor(){
+    effect(() => {
+      console.log('starting effect, loading board');
+      
+      this.dbService.getBoard().subscribe(board => {
+        console.log('board loaded, setting it');
+        
+        this.board.set(board)
+        this.loadColumnsAndTasks()
+      })
+    })
+  }
+
+  loadColumnsAndTasks(){
+    console.log('loading columns and tasks')
+    this.dbService.getColumns(this.board().id).subscribe((columns: any) => {
+      
+      
+      this.columns = columns.data
+      console.log('columns loaded, loading tasks per each column');
+
+      this.columns.forEach((column: any)=>{
+        console.log(`loading tasks for column ${column.id}`);
+        
+        this.dbService.getTasks(column.id).subscribe((columnTasks: any) => {
+          column.tasks = columnTasks.data
+          console.log(`loaded tasks`);
+          
+        })
+      })
+    })
+
   }
 }
