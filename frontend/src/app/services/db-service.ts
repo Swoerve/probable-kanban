@@ -11,15 +11,15 @@ export class DbService {
   constructor(){}
 
   getBoard(){
-    return this.http.get(`/api/boards/${this.boardId}`)
+    return this.http.get(`/api/board/${this.boardId}`)
   }
   
   getColumns(boardId: number){
-    return this.http.get(`/api/columns/${boardId}`)
+    return this.http.get(`/api/column/${boardId}`)
   }
 
   getTasks(columnId: number){
-    return this.http.get(`/api/tasks/${columnId}`)
+    return this.http.get(`/api/task/${columnId}`)
   }
 
 }
