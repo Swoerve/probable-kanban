@@ -6,11 +6,7 @@ const routes = require('./router')
 
 
 app.use(cors())
-app.use('/api', express.json())
 
-app.get('/api', (_request, response) => {
-    response.send({hello: 'World'})
-})
 app.use('/api', routes)
 app.use(express.static(path.join(path.resolve(), 'dist/frontend/browser')))
 
