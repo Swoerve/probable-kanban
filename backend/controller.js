@@ -5,6 +5,11 @@ dotenv.config()
 const pgp = require('pg-promise')(/* options */)
 
 const dbUri = process.env.PGURI
+if(dbUri){
+  console.log('connection string exists');
+} else {
+  throw
+}
 
 const db = pgp(dbUri)
 
